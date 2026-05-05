@@ -1,0 +1,60 @@
+/runtime
+/uploads
+/assets
+/tests
+/node_modules
+config/db.php
+/assets
+composer.lock
+
+# Environment files - contain secrets, never commit
+.env
+.env.local
+.env.*.local
+
+# Firebase / Google Cloud service account credentials
+estudent.json
+nxtschool.json
+*-service-account.json
+*-firebase-adminsdk-*.json
+
+# Large archive files - exceed GitHub 100MB file limit
+*.zip
+backend.zip
+vendor.zip
+
+# Stray files
+zizaXoLX
+finalmarksheet
+finalmarksheet.pdf
+web/uploads/
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+/vendor
+
+# composer itself is not needed
+composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+tests/_output/*
+tests/_support/_generated

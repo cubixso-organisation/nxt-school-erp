@@ -1,0 +1,77 @@
+<div class="form-group" id="add-campus-has-users">
+<?php
+use kartik\grid\GridView;
+use kartik\builder\TabularForm;
+use yii\data\ArrayDataProvider;
+use yii\helpers\Html;
+use yii\widgets\Pjax;
+
+$dataProvider = new ArrayDataProvider([
+    'allModels' => $row,
+    'pagination' => [
+        'pageSize' => -1
+    ]
+]);
+echo TabularForm::widget([
+    'dataProvider' => $dataProvider,
+    'formName' => 'CampusHasUsers',
+    'checkboxColumn' => false,
+    'actionColumn' => false,
+    'attributeDefaults' => [
+        'type' => TabularForm::INPUT_TEXT,
+    ],
+    'attributes' => [
+        "id" => ['type' => TabularForm::INPUT_HIDDEN, 'columnOptions' => ['hidden'=>true]],
+        'institute_id' => [
+            'label' => 'Institutes',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\app\modules\admin\models\Institutes::find()->orderBy('title')->asArray()->all(), 'id', 'title'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Institutes')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'campus_id' => [
+            'label' => 'Campus',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\app\modules\admin\models\Campus::find()->orderBy('id')->asArray()->all(), 'id', 'id'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose Campus')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'user_id' => [
+            'label' => 'User',
+            'type' => TabularForm::INPUT_WIDGET,
+            'widgetClass' => \kartik\widgets\Select2::className(),
+            'options' => [
+                'data' => \yii\helpers\ArrayHelper::map(\app\modules\admin\models\User::find()->orderBy('username')->asArray()->all(), 'id', 'username'),
+                'options' => ['placeholder' => Yii::t('app', 'Choose User')],
+            ],
+            'columnOptions' => ['width' => '200px']
+        ],
+        'del' => [
+            'type' => 'raw',
+            'label' => '',
+            'value' => function($model, $key) {
+                return
+                    Html::hiddenInput('Children[' . $key . '][id]', (!empty($model['id'])) ? $model['id'] : "") .
+                    Html::a('<i class="fa fa-trash"></i>', '#', ['title' =>  Yii::t('app', 'Delete'), 'onClick' => 'delRowCampusHasUsers(' . $key . '); return false;', 'id' => 'campus-has-users-del-btn']);
+            },
+        ],
+    ],
+    'gridSettings' => [
+        'panel' => [
+            'heading' => false,
+            'type' => GridView::TYPE_DEFAULT,
+            'before' => false,
+            'footer' => false,
+            'after' => Html::button('<i class="fa fa-plus"></i>' . Yii::t('app', 'Add Campus Has Users'), ['type' => 'button', 'class' => 'btn btn-success kv-batch-create', 'onClick' => 'addRowCampusHasUsers()']),
+        ]
+    ]
+]);
+echo  "    </div>\n\n";
+?>
+

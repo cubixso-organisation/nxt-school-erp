@@ -1,0 +1,92 @@
+.a.btn.btn-primary {
+    background-color: #24843A !important;
+    border: 1px solid #24843A !important;
+}
+
+.btn-primary {
+    background-color: #24843a;
+    border: 1px solid #24843a;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary {
+    background-color: #111111;
+    border: 1px solid #111111;
+    
+}
+#toggle_btn {
+    
+    /* background: #24843a; */
+    
+}
+
+a:hover {
+    color: #24843a;
+}
+span {
+    color: #24843a;
+}
+.sidebar-menu ul ul a.active{
+    color: #24843a;
+    background: #edf4ff
+}
+
+span.badge.badge-default {
+    color: #111111;
+    border: 1px solid;
+    background: yellow;
+}
+.bg-comman .db-icon {
+    background-color: #edf4ff;
+    padding: 30px;
+}
+.sidebar-menu li.active>a::before {
+    background: #24843a;
+}
+.sidebar-menu li.active>a {
+    background-color: #f7f7fa;
+    color: #24843a;
+}
+.sidebar-menu li a:hover {
+    background: #24843a !important;
+    
+}
+.sidebar-menu li a {
+    color: #ffffff !important   ;
+   
+}
+.bg-comman {
+   
+   
+    border: 1px #bdbdbdb8 solid !important;
+}
+.user-img .user-text h6 {
+    
+    color: #ffffff;
+    
+}
+.user-img .user-text .text-muted {
+    
+    color: #ffffff!important;
+}
+
+.dropdown-item:focus, .dropdown-item:hover {
+    
+    background-color: #24843a !important;
+}
+.user-menu .dropdown-menu .dropdown-item:hover {
+    color: #ffffff !important;
+}
+.dropdown-item.active, .dropdown-item:active {
+    background-color: #24843a !important;
+}
+.dropdown-item {
+    
+    color: #ffffff !important;
+   
+}
+img.rounded-circle {
+    width: 45px !important;
+}
+/* .dropdown-menu {
+    
+    background-color: #00370c !important;
+} */

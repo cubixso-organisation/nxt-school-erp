@@ -1,0 +1,41 @@
+
+@page {
+    background: url('https://ik.imagekit.io/exp9ppbfg/649810122952news_JJpg1Czew.jpg') no-repeat 0 0;
+    /* background: url("../../../../../web/bg.jpg") no-repeat 0 0; */
+
+    background-image-resize: 6;
+    position: relative;
+
+}
+
+.bottom-left {
+    position: absolute;
+    bottom: 15px;
+    left: 222px;
+
+
+  }
+
+
+  
+.bottom-right {
+    position: absolute;
+    bottom: 15px;
+    left: 508px;
+
+
+  }
+
+
+
+  .centered {
+    position: absolute;
+    top: 90%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+  }
+  .bottom-centered{
+    position: absolute;
+    bottom: 15px;
+    left: 380px;
+  }

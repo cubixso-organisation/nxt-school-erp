@@ -1,0 +1,28 @@
+<?php
+
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $model app\modules\admin\models\Permissions */
+
+$this->title = Yii::t('app', 'Update {modelClass}: ', [
+    'modelClass' => 'Permissions',
+]) . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Permissions'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = Yii::t('app', 'Update');
+?>
+<div class="permissions-update">
+    <div class="card">
+        <div class="card-body">
+            <!-- <h1><?= Html::encode($this->title) ?></h1> -->
+
+            <?= $this->render('_form', [
+                'model' => $model,
+                'existingDivisions' => $existingDivisions,
+                'allDivisions' => $allDivisions
+
+            ]) ?>
+        </div>
+    </div>
+</div>

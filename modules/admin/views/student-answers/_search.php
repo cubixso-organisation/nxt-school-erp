@@ -1,0 +1,37 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\modules\admin\models\StudentAnswersSearch */
+/* @var $form yii\widgets\ActiveForm */
+?>
+
+<div class="form-student-answers-search">
+
+    <?php $form = ActiveForm::begin([
+        'action' => ['index'],
+        'method' => 'get',
+    ]); ?>
+
+    <?= $form->field($model, 'id', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
+    <?= $form->field($model, 'question_id')->textInput(['placeholder' => 'Question']) ?>
+
+    <?= $form->field($model, 'selected_option_id')->textInput(['placeholder' => 'Selected Option']) ?>
+
+    <?= $form->field($model, 'answer_text')->textarea(['rows' => 6]) ?>
+
+    <?= $form->field($model, 'marks_awarded')->textInput(['placeholder' => 'Marks Awarded']) ?>
+
+    <?php /* echo $form->field($model, 'status')->dropDownList($model->getStateOptions()) */ ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
+
+</div>

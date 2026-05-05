@@ -1,0 +1,20 @@
+<?php
+
+namespace app\modules\leavemanagement\controllers;
+
+use yii\web\Controller;
+
+/**
+ * Default controller for the `leave-management` module
+ */
+class DefaultController extends Controller
+{
+    /**
+     * Renders the index view for the module
+     * @return string
+     */
+    public function actionIndex()
+    {
+        return $this->render('index');
+    }
+}

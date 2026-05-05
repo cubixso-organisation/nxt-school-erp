@@ -1,0 +1,531 @@
+[
+  {
+    "name": "Dashboard",
+    "url": "dashboard"
+  },
+  {
+    "name": "campus",
+    "url": "campus"
+  },
+  {
+    "name": "Users",
+    "children": [
+      {
+        "name": "Users",
+        "url": "users"
+      },
+      {
+        "name": "Key Person",
+        "url": "users/key-persons"
+      },
+      {
+        "name": "Teacher Profile Edit",
+        "url": "index-teacher"
+      },
+      {
+        "name": "Parent Profile Edit",
+        "url": "index-parent"
+      }
+    ]
+  },
+  {
+    "name": "Notice Management",
+    "children": [
+      {
+        "name": "Notice Boards",
+        "url": "notice-boards"
+      },
+      {
+        "name": "Student Notice",
+        "url": "student-notice-boards"
+      }
+    ]
+  },
+  {
+    "name": "Academics",
+    "children": [
+      {
+        "name": "Subject Management",
+        "children": [
+          {
+            "name": "Subjects",
+            "url": "subjects"
+          },
+          {
+            "name": "Subjects Groups",
+            "url": "subject-groups"
+          },
+          {
+            "name": "Subjects Time Table",
+            "url": "subject-timetable"
+          }
+        ]
+      },
+      {
+        "name": "Teacher Management",
+        "children": [
+          {
+            "name": "Teacher Details",
+            "url": "teacher-details"
+          },
+          {
+            "name": "Assign Class Teacher",
+            "url": "class-teacher"
+          },
+          {
+            "name": "Teacher Time Table",
+            "url": "subject-timetable/teacher-time-table"
+          }
+        ]
+      },
+      {
+        "name": "Class Management",
+        "children": [
+          {
+            "name": "class",
+            "url": "student-class"
+          },
+          {
+            "name": "Section",
+            "url": "class-sections"
+          },
+          {
+            "name": "Class Room",
+            "url": "class-rooms"
+          },
+          {
+            "name": "Special COURSES",
+            "url": "special-courses"
+          }
+        ]
+      },
+      {
+        "name": "Attendance Management",
+        "children": [
+          {
+            "name": "Attendance Setting",
+            "url": "attendance-settings"
+          },
+          {
+            "name": "Attendance Time Table",
+            "url": "attendance-time-tables"
+          }
+        ]
+      },
+      {
+        "name": "Academic Year",
+        "url": "academic-years"
+      },
+      {
+        "name": "Leave Type",
+        "url": "leave-types"
+      },
+      {
+        "name": "Special Days",
+        "url": "special-days"
+      },
+      {
+        "name": "Student Dairy",
+        "url": "student-dairy"
+      }
+    ]
+  },
+  {
+    "name": "Student Management",
+    "children": [
+      {
+        "name": "Parent Details",
+        "url": "parent-details"
+      },
+      {
+        "name": "Student Details",
+        "url": "student-details"
+      },
+      {
+        "name": "Student Form",
+        "url": "student-details/student-form-print"
+      },
+      {
+        "name": "Promote Student",
+        "url": "student-details/promote-students"
+      },
+      {
+        "name": "Student Attendance",
+        "url": "student-class-attendance"
+      },
+      {
+        "name": "Teacher Notice",
+        "url": "notice-boards"
+      }
+    ]
+  },
+
+  {
+    "name": "Bus Management",
+    "children": [
+      {
+        "name": "Manage Bus Driver",
+        "children": [
+          {
+            "name": "Create Bus Driver",
+            "url": "bus-details/driver-create"
+          },
+          {
+            "name": "View Bus driver",
+            "url": "bus-details/bus-driver"
+          },
+          {
+            "name": "Assign Bus Driver",
+            "url": "driver-has-bus/create"
+          }
+        ]
+      },
+      {
+        "name": "Manage Bus",
+        "children": [
+          {
+            "name": "Bus Create",
+            "url": "bus-details/create"
+          },
+          {
+            "name": "Bus Details",
+            "url": "bus-details"
+          },
+          {
+            "name": "Bus Route Create",
+            "url": "bus-route/create"
+          },
+          {
+            "name": "View Bus Stop",
+            "url": "bus-route"
+          },
+          {
+            "name": "Assign Student Bus",
+            "url": "student-has-bus"
+          },
+          {
+            "name": "Bus Reports",
+            "url": "bus-details/bus-reports"
+          }
+        ]
+      },
+      {
+        "name": "Manage Bus Coordinator",
+        "children": [
+          {
+            "name": "Bus Coordinator Create",
+            "url": "bus-details/coordinator-create"
+          },
+          {
+            "name": "Bus Coordinator",
+            "url": "bus-details/bus-coordinator"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Fee Management",
+    "children": [
+      {
+        "name": "Pay Fee",
+        "url": "pay-fees/assign-fee-details"
+      },
+      {
+        "name": "Pay Old Fee",
+        "url": "pay-fees/pay-old-fee"
+      },
+      {
+        "name": "Fees Types",
+        "url": "fees-typs/create"
+      },
+      {
+        "name": "Fee Structure",
+        "url": "fee-structures"
+      },
+      {
+        "name": "Bulk Fee Assign",
+        "url": "pay-fees"
+      },
+      {
+        "name": "Fees Reports",
+        "url": "payment-details/fees-reports"
+      },
+      {
+        "name": "Fees Balance Sheet",
+        "url": "fee-structures/balance-sheet"
+      },
+      {
+        "name": "Transaction History",
+        "url": "payment-details"
+      }
+    ]
+  },
+  {
+    "name": "Agent Management",
+    "children": [
+      {
+        "name": "Create Agent",
+        "url": "student-details-agent-lead/agents-create"
+      },
+      {
+        "name": "View Agents",
+        "url": "student-details-agent-lead/agents"
+      },
+      {
+        "name": "Agents Admission",
+        "url": "student-details-agent-lead"
+      },
+      {
+        "name": "Agent payment Details",
+        "url": "agent-student-join"
+      }
+    ]
+  },
+  {
+    "name": "Inventory Management",
+    "children": [
+      {
+        "name": "Item Supplier",
+        "url": "inventory/item-supplier-list"
+      },
+      {
+        "name": "Item Store",
+        "url": "inventory/item-store"
+      },
+      {
+        "name": "Item Category",
+        "url": "inventory/item-category"
+      },
+      {
+        "name": "Inventory Item",
+        "url": "inventory/inventory-items"
+      },
+      {
+        "name": "Add Item To Stock",
+        "url": "inventory/add-item-stock"
+      },
+      {
+        "name": "Issue Item",
+        "url": "inventory/issue-return-inventory"
+      }
+    ]
+  },
+  {
+    "name": "Document Generator",
+    "children": [
+      {
+        "name": "Certificate Template",
+        "url": "document-generator/studentcertificates"
+      },
+      {
+        "name": "Generate Certificate",
+        "url": "document-generator/studentcertificates/generate-certificate"
+      },
+      {
+        "name": "Certificate List",
+        "url": "document-generator/studentcertificates/index-certificate-list"
+      }
+    ]
+  },
+  {
+    "name": "Hostel Management",
+    "children": [
+      {
+        "name": "Hostel",
+        "url": "hostel-management/hostels"
+      },
+      {
+        "name": "Create Chief Warden",
+        "url": "hostel-management/hostels/create-chief-warden"
+      },
+      {
+        "name": "Create Warden",
+        "url": "hostel-management/hostels/create-warden"
+      },
+      {
+        "name": "Warden's List",
+        "url": "hostel-management/hostels/warden-list"
+      },
+      {
+        "name": "Floor",
+        "url": "hostel-management/floor"
+      },
+      {
+        "name": "Assign Warden To Hostel",
+        "url": "hostel-management/warden-to-hostel"
+      },
+      {
+        "name": "Rooms",
+        "url": "hostel-management/rooms"
+      },
+      {
+        "name": "Hostelers",
+        "url": "hostel-management/hostellers"
+      },
+      {
+        "name": "Hostelers Attendance",
+        "url": "hostel-management/hostellers-attandance"
+      },
+      {
+        "name": "Today's Hostelers Attendance",
+        "url": "hostel-management/hostellers-attandance/index-day-wise-attendance"
+      },
+      {
+        "name": "Warden Attendance",
+        "url": "hostel-management/warden-attandance"
+      },
+      {
+        "name": "Today's Warden Attendance",
+        "url": "hostel-management/warden-attandance/index-day-wise-attendance"
+      }
+    ]
+  },
+  {
+    "name": "Library Management",
+    "children": [
+      {
+        "name": "Available Books",
+        "url": "library-management/library-books"
+      },
+      {
+        "name": "Create Librarian",
+        "url": "library-management/library-members/index-librarian"
+      },
+      {
+        "name": "Issue Books",
+        "url": "library-management/issue-books"
+      },
+      {
+        "name": "Books Racks",
+        "url": "library-management/library-racks"
+      },
+      {
+        "name": "Members",
+        "url": "library-management/library-members"
+      }
+    ]
+  },
+  {
+    "name": "Leave Management",
+    "children": [
+      {
+        "name": "Create Leave Types",
+        "url": "leave-management/staff-leave-types/create"
+      },
+      {
+        "name": "Leave Types",
+        "url": "leave-management/staff-leave-types"
+      },
+      {
+        "name": "Leave Application",
+        "url": "leave-management/staff-leave-applied"
+      }
+    ]
+  },
+  {
+    "name": "Child Assessment",
+    "children": [
+      {
+        "name": "Child Merit",
+        "url": "child-assessment/child-merit"
+      },
+      {
+        "name": "Assigned Merit",
+        "url": "child-assessment/merits-assigned-to-class"
+      },
+      {
+        "name": "Student Merit Marks",
+        "url": "child-assessment/student-merit-marks"
+      }
+    ]
+  },
+  {
+    "name": "Exam Management",
+    "children": [
+      {
+        "name": "Update Teacher Details",
+        "url": "exam-management/teacher-class-and-subjects"
+      },
+      {
+        "name": "Exams",
+        "url": "exams"
+      },
+      {
+        "name": "Schedule Exam",
+        "url": "exam-management/exam-schedules"
+      },
+      {
+        "name": "Exam Time Table",
+        "url": "exam-management/exam-schedules/create-time-table"
+      },
+      {
+        "name": "Exam Result",
+        "url": "exams-result"
+      },
+      {
+        "name": "Exam Wise Marksheet",
+        "url": "exam-management/exam-student-marksheet"
+      },
+      {
+        "name": "Final Marksheet",
+        "url": "exam-management/final-marksheet"
+      },
+      {
+        "name": "Exam Hall Ticket",
+        "url": "exam-management/exam-schedules/exam-hall-ticket"
+      }
+    ]
+  },
+  {
+    "name": "Staff Management",
+    "children": [
+      {
+        "name": "Designations",
+        "url": "staff-management/staff-designations"
+      },
+      {
+        "name": "Staffs",
+        "url": "staff-management/staff-details"
+      },
+      {
+        "name": "Staff Attendance Settings",
+        "url": "staff-management/staff-attendence-settings"
+      },
+      {
+        "name": "Today Attendance",
+        "url": "staff-management/staff-attendence/today-attandance"
+      },
+      {
+        "name": "Attendance History",
+        "url": "staff-management/staff-attendence"
+      },
+      {
+        "name": "Salary",
+        "children": [
+          {
+            "name": "Staff Salaries",
+            "url": "staff-management/staff-salary"
+          },
+          {
+            "name": "Salary Groups",
+            "url": "staff-management/salary-groups"
+          }
+        ]
+      },
+      {
+        "name": "Payroll Settings",
+        "children": [
+          {
+            "name": "Payroll Components",
+            "url": "staff-management/salary-components"
+          },
+          {
+            "name": "Payroll Group",
+            "url": "staff-management/salary-components"
+          }
+        ]
+      }
+    ]
+  }
+]
