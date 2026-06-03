@@ -181,6 +181,9 @@ $config = [
 		'otp' => [
 			'class' => 'app\components\SendOtp',
 		],
+		'ai' => [
+			'class' => 'app\components\ai\AIClient',
+		],
 
 
 

@@ -533,10 +533,8 @@ class FirebaseNotification extends Component
 
     private function getGoogleAccessToken()
     {
-        // Path to your service account JSON file
-        $credentialsFilePath = 'nxtschool.json'; // Replace with your actual path and file name
+        $credentialsFilePath = getenv('FIREBASE_NXTSCHOOL_KEY_PATH') ?: (getenv('HOME') . '/.config/nxtschools/nxtschool.json');
 
-        // Check if file exists
         if (!file_exists($credentialsFilePath)) {
             throw new Exception('Service account file not found: ' . $credentialsFilePath);
         }

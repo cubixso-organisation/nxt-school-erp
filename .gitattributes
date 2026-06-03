@@ -1,0 +1,21 @@
+# GitHub Linguist configuration
+# Goal: the repository language breakdown should reflect the actual ERP
+# stack (PHP, JavaScript, CSS) and not be dominated by bundled third-party
+# theme/library files. "vendored" files are kept in the repo but excluded
+# from the language statistics.
+
+# Purchased HTML admin theme — template/demo pages, not application logic
+themes/school-management/** linguist-vendored
+
+# jpgraph — third-party PHP charting library
+themes/jpgraph/**           linguist-vendored
+
+# Minified / bundled assets
+*.min.js   linguist-vendored
+*.min.css  linguist-vendored
+
+# Normalise line endings
+* text=auto
+*.php  text
+*.js   text
+*.css  text

@@ -58,3 +58,8 @@ phpunit.phar
 
 tests/_output/*
 tests/_support/_generated
+
+# Local tooling / caches (not part of the ERP)
+/node-compile-cache
+/.agents
+skills-lock.json
