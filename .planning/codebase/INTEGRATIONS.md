@@ -1,204 +1,224 @@
 # External Integrations
 
-**Analysis Date:** 2026-04-28
+**Analysis Date:** 2026-06-04
 
 ## APIs & External Services
 
-**Email Services:**
-- SendGrid - Outgoing email via SMTP
-  - SDK/Client: `yii\swiftmailer\Mailer` with Swift_SmtpTransport
-  - Config: `config/web.php` lines 81-93
-  - Host: `smtp.sendgrid.net`, Port: 587, Encryption: TLS
-  - Auth: `username: "apikey"`, `password: "[SENDGRID_API_KEY]"`
-  - Status: HARDCODED API KEY (SECURITY RISK) - line 89
-
-- Brevo (formerly Sendinblue) - Transactional email API
-  - SDK/Client: cURL (raw HTTP)
-  - Implementation: `components/BrevoEmail.php`
-  - Endpoint: `https://api.brevo.com/v3/smtp/email`
-  - Auth: API key from `WebSetting::getSettingBykey('brevo_email_api_key')`
-  - Usage: Sending templated emails with custom sender names per campus/institute
-
-**Push Notifications:**
-- Firebase Cloud Messaging (FCM)
-  - SDK/Client: `google/apiclient` 2.0
+**Google Cloud Services:**
+- Firebase Cloud Messaging (FCM) - Push notifications to mobile apps
+  - SDK/Client: `google/apiclient` (2.0)
+  - Auth: Service account JSON files
   - Implementation: `components/FirebaseNotification.php`
-  - Uses Google Access Token flow for authentication
-  - Keys stored in `WebSetting` table:
-    - `driver_notification_key`
-    - `restaurant_notification_key`
-    - `user_notification_key`
-  - Device tokens stored per user in `AuthSession` model
+  - Access token generation via JWT with service account private key
+  - FCM v1 API endpoint: `https://fcm.googleapis.com/v1/projects/{project_id}/messages:send`
+  - Legacy FCM endpoint: `https://fcm.googleapis.com/fcm/send`
+
+- Google Maps API - Location-based services
+  - SDK/Client: `2amigos/yii2-google-maps-library`
+  - Auth: API key via `GOOGLE_MAPS_API_KEY` env var
+  - Implementation: `components/DrivingDistance.php` (distance calculations)
+
+- Google OAuth - User authentication
+  - SDK/Client: `yiisoft/yii2-authclient`
+  - Implementation: `components/AuthHandler.php`
+
+**Anthropic Claude AI:**
+- Claude API - AI/LLM for tools, RAG, audit logging
+  - SDK/Client: Custom HTTP client via cURL
+  - Auth: API key via `ANTHROPIC_API_KEY` env var
+  - Model: Claude Sonnet 4.6 (configurable via `ANTHROPIC_MODEL`)
+  - Base URL: `https://api.anthropic.com/v1/messages`
+  - API version: `2023-06-01`
+  - Implementation: `components/ai/AIClient.php`
+  - Tool registry pattern: `components/ai/tools/ToolRegistry.php`
+  - Audit logging: `components/ai/AuditLogger.php`
+  - PII redaction: `components/ai/PiiRedactor.php` (redacts emails, phone numbers, Aadhaar, national IDs)
+  - Token limit: 1024 (default, configurable)
+
+**ImageKit Image Hosting:**
+- ImageKit.io - Image upload and CDN
+  - API: `https://upload.imagekit.io/api/v1/files/upload`
+  - Auth: Basic auth with public/private keys from database settings
+  - Implementation: `components/FirebaseNotification.php` methods `imageKitUpload()`, `withoutLoginImagekit()`
+
+**Email Services:**
+- SendGrid SMTP - Transactional email
+  - Host: `smtp.sendgrid.net` port 587
+  - Auth: API key via `SENDGRID_API_KEY` env var
+  - Username: `apikey` (literal string)
+  - Encryption: TLS
+  - Implementation: `config/web.php` mailer config
+  - Mailer class: `yii\swiftmailer\Mailer`
+
+- Brevo (formerly Sendinblue) - Email provider integration
+  - Implementation: `components/BrevoEmail.php`
+
+**SMS Services:**
+- 2Factor.in SMS Gateway - OTP and transactional SMS
+  - API endpoints:
+    - OTP send: `http://2factor.in/API/V1/{api_key}/SMS/91{phone}/{otp}`
+    - OTP verify: `http://2factor.in/API/V1/{api_key}/SMS/VERIFY/{session_code}/{otp_code}`
+    - Transactional SMS: `http://2factor.in/API/V1/{api_key}/ADDON_SERVICES/SEND/TSMS`
+    - Dynamic template SMS: `https://2factor.in/API/R1/` (POST)
+  - Auth: API key from database settings
+  - Implementation: `components/FirebaseNotification.php` methods:
+    - `sendOtp()` - Send OTP
+    - `verifyOtp()` - Verify OTP
+    - `sendSMS()` - Transactional SMS
+    - `sendSMSDynamicTemplate()` - Templated SMS
+    - `sendSMSDynamicTemplateV2()` - Templated SMS with variable mapping
+
+- MSG91 - SMS provider (alternate/legacy)
+  - API: `http://api.msg91.com/api/sendhttp.php`
+  - Implementation: `components/FirebaseNotification.php` method `sendSms91()`
 
 **Payment Processing:**
 - Razorpay - Payment gateway
-  - SDK/Client: cURL (raw HTTP)
   - Implementation: `components/RazorPay.php`
-  - Endpoint: `https://api.razorpay.com/v1/orders`
-  - Auth: Basic auth with `razorpay_key_id:razorpay_key_secret` (from `WebSetting`)
-  - Features: Order creation, payment verification
-  - Integration: Web-based order flow in admin/e-commerce modules
+  - Sensitive field: `razorpay_payment_id` (redacted in logs)
 
-**Mapping & Geolocation:**
-- Google Maps API - Distance matrix and location services
-  - SDK/Client: `2amigos/yii2-google-maps-library`, cURL for Distance Matrix API
-  - Implementation: `components/DrivingDistance.php`
-  - Google Maps Key: `<REDACTED — set GOOGLE_MAPS_API_KEY in .env>` (loaded via env in `config/web.php` line 191)
+**Document Generation:**
+- Internal NxtSchools API - PDF/Document generation
+  - Base: `https://api.nxtschools.com` and `https://api.nxtschools.tech`
   - Endpoints:
-    - Distance Matrix API: `https://maps.googleapis.com/maps/api/distancematrix/json`
-    - Map rendering widget in views
-  - Usage: Calculate driving distance between locations (currently commented out in DrivingDistance.php)
-  - Visualization: Highcharts integration for map data display
+    - `/api/v1/token/generate` - Token generation
+    - `/api/v1/document-generator/generatePdf` - Standard PDF
+    - `/api/v1/document-generator/generate-marksheet-silvercrest` - Marksheet PDF
+    - `/api/v1/document-generator/finalPdf` - Final marksheet PDF
+  - Auth: Bearer token (JWT)
+  - Implementation: `components/FirebaseNotification.php` methods:
+    - `generateToken()` - Request auth token
+    - `generateMarksheetPdf()` - Standard marksheet
+    - `silverCrestMarksheet()` - Silver Crest marksheet
+    - `generateFinalMarksheetPdf()` - Final marksheet
 
 ## Data Storage
 
 **Databases:**
-- MySQL 5.7+ / MariaDB 10.2+
-  - Connection: `config/db.php`
-  - Host: `localhost` (default, changeable)
-  - Database: `nxt_backend`
-  - Charset: `utf8mb4` with Unicode collation
-  - Client: Yii2 ActiveRecord ORM
-  - Credentials: Hardcoded in config file (SECURITY CONCERN)
-  - Features: Schema caching enabled (3600s)
+- MySQL 5.7+ (default: localhost)
+  - DSN via `DB_DSN` env var or default `mysql:host=localhost;dbname=nxt_backend`
+  - Username: `DB_USERNAME` env var
+  - Password: `DB_PASSWORD` env var
+  - Charset: utf8mb4
+  - Collation: utf8mb4_unicode_ci
+  - Client: Yii2 `yii\db\Connection`
+  - ORM: Yii2 ActiveRecord models in `models/` and `modules/*/models/`
+  - Tables:
+    - `ai_invocations` - AI tool invocation logs
+    - `ai_proposals` - AI-generated change proposals
+    - `fcm_notification` - Push notification history
+    - `auth_session` - User device tokens for push notifications
+    - Others: Users, institutes, campuses, orders, students, etc.
 
 **File Storage:**
-- Local filesystem only
-  - Upload directory: `uploads/` (git-ignored)
-  - Runtime directory: `runtime/` (git-ignored)
-  - Web-accessible assets: `web/assets/` (generated)
-  - Media module: `modules/media/` handles media operations
+- Local filesystem:
+  - Uploads: `./uploads/` (writable, user-managed)
+  - Runtime cache: `./runtime/cache/` (writable, system-managed)
+  - Logs: `./runtime/logs/` (writable, system-managed)
+  - Generated PDFs: `./runtime/mpdf/` (mPDF temp directory)
+  - Assets: `./web/assets/` (compiled by Yii2)
 
 **Caching:**
-- File-based caching via Yii2
-  - Implementation: `yii\caching\FileCache`
-  - Cache location: `runtime/cache/` (file-based)
-  - No external cache service (Redis/Memcached)
+- File-based cache via `yii\caching\FileCache`
+- Location: `./runtime/cache/`
+- Schema cache: 1-hour TTL for database schema caching
 
 ## Authentication & Identity
 
 **Auth Provider:**
-- Custom authentication system
-  - Implementation: `app\models\User` (identity class)
-  - Session management: Yii2 built-in session handling
-  - Auto-login: Enabled via persistent cookies
-  - Config: `config/web.php` lines 70-72
+- Custom + OAuth hybrid
+  - Session-based: Yii2 `yii\web\User` with `app\models\User` identity class
+  - OAuth: `yiisoft/yii2-authclient` for Google/social login
+  - Implementation: `components/AuthHandler.php`
 
-- OAuth Integration:
-  - SDK: `yiisoft/yii2-authclient` *
-  - Purpose: Social/third-party authentication support
-  - Implementation: `components/AuthHandler.php` (custom OAuth handler)
-  - Status: Integrated but specific providers not yet configured
+**Token/Session Management:**
+- Cookie-based sessions (Yii2 default)
+- Cookie validation key: `COOKIE_VALIDATION_KEY` env var (required for security)
+- Device token tracking: `auth_session` table for push notifications
+
+**Firebase Service Accounts:**
+- File path variables:
+  - `FIREBASE_NXTSCHOOL_KEY_PATH` - Primary Firebase credentials
+  - `FIREBASE_ESTUDENT_KEY_PATH` - Secondary Firebase credentials
+- Fallback: `~/.config/nxtschools/nxtschool.json` if env var not set
+- Format: Google service account JSON with private key
+- Usage: JWT token generation for FCM access
 
 ## Monitoring & Observability
 
 **Error Tracking:**
-- Not detected - No third-party error tracking service (Sentry, Bugsnag, etc.)
-- Local approach: File-based logging
+- Application exceptions logged to `./runtime/logs/`
+- Yii2 error handler: `site/error` action
+- Debug toolbar: Yii2 Debug (~2.0.0) in development
 
 **Logs:**
-- Yii2 File Logging
-  - Implementation: `yii\log\FileTarget`
-  - Log location: `runtime/logs/` (git-ignored)
-  - Levels captured: `error`, `warning`
-  - Categories: SwiftMailer logs specifically
-  - Viewer: `kriss/yii2-log-reader` 2.* for UI access
-  - Debug mode: Yii2 Debug module enabled in dev environment
+- File-based logging: `yii\log\FileTarget`
+- SwiftMailer errors/warnings: `yii\swiftmailer\Logger`
+- Log categories: `yii\swiftmailer\Logger::add`
+
+**AI Audit Logging:**
+- Invocations logged to `ai_invocations` table:
+  - Tool name, model, user/institute/campus context
+  - Request/response payloads (JSON)
+  - Latency in milliseconds
+  - Status (success/error) and error messages
+- Proposals logged to `ai_proposals` table:
+  - Target table/primary key
+  - Proposed changes (JSON)
+  - Reasoning
+  - Status (pending)
+- PII redaction on logging via `components/ai/PiiRedactor.php`
 
 ## CI/CD & Deployment
 
 **Hosting:**
-- Not auto-detected - Likely shared hosting or dedicated server
-- Requirements: Apache with PHP module or PHP-FPM
-- Deployment: Manual (no CI/CD pipeline detected in codebase)
+- Generic PHP hosting (server details not specified in config)
+- Requires: PHP 7.0+, MySQL, writable directories
 
 **CI Pipeline:**
-- Not detected - No GitHub Actions, GitLab CI, Jenkins configs found
+- Not detected in codebase
+
+**Composer Post-Install:**
+- Cookie validation key generation on `composer install`
+- Permission setting via Composer hooks
 
 ## Environment Configuration
 
 **Required env vars:**
-None - All configuration is file-based in `config/` directory
-
-**Hardcoded Secrets (CRITICAL ISSUES):**
-- SendGrid API Key - `config/web.php` line 89
-- Google Maps API Key - `config/web.php` line 191
-- Database credentials - `config/db.php` lines 5-6
-- Cookie validation key - `config/web.php` line 54
-
-**Settings Storage:**
-- Dynamic settings stored in database `WebSetting` table
-- Accessed via: `WebSetting::getSettingBykey()`
-- Includes: API keys, configuration flags, sender emails
+- `DB_DSN` - MySQL connection string
+- `DB_USERNAME` - Database user
+- `DB_PASSWORD` - Database password
+- `COOKIE_VALIDATION_KEY` - Session/cookie encryption key (32+ chars)
+- `SENDGRID_API_KEY` - SendGrid SMTP credentials
+- `GOOGLE_MAPS_API_KEY` - Google Maps API key
+- `FIREBASE_NXTSCHOOL_KEY_PATH` - Path to Firebase service account JSON
+- `FIREBASE_ESTUDENT_KEY_PATH` - Path to second Firebase account JSON
+- `ANTHROPIC_API_KEY` - Claude API key
+- `ANTHROPIC_MODEL` - Claude model (default: claude-sonnet-4-6)
 
 **Secrets location:**
-- Database table: `WebSetting` (for dynamic, environment-specific settings)
-- Config files: `config/web.php`, `config/db.php` (hardcoded)
-- Runtime: Not using .env files or environment variables
+- `.env` file (gitignored) - Local development
+- Service account JSONs: Absolute file paths or `~/.config/nxtschools/`
+- Environment variable injection on deployment
+
+**Custom dotenv loader:**
+- Location: `config/env.php`
+- No external dependency (pure PHP)
+- Loads `.env` into `getenv()`, `$_ENV`, `$_SERVER`
+- Respects existing OS/server env vars (no override)
+- Strips quotes from values
+- Skips comments and blank lines
 
 ## Webhooks & Callbacks
 
 **Incoming:**
-- Firebase FCM callback handling (device token registration)
-  - Route: API endpoints under `modules/api/`
-  - Processing: `modules/api/controllers/` handle registration
+- Not detected
 
 **Outgoing:**
-- Razorpay payment webhooks (implied)
-  - Verification: Basic auth checks in payment handlers
-  - Endpoints: Admin order management controllers
-
-- Email delivery webhooks (not detected)
-  - SendGrid/Brevo event tracking: Not implemented
-
-## API Architecture
-
-**Internal API:**
-- RESTful API module: `modules/api/`
-- Controllers: `modules/api/controllers/`
-  - DefaultController
-  - StudentController, TeacherController, ParentController
-  - AgentController, BusDriverController, AccountantController
-  - ChiefWardenController, HostelManagementController
-  - ChildAssessmentController, ExamManagementController
-  - LeaveManagementController, ManagementController
-  - StudentCertificatesController
-- Authentication: Yii2 session-based + OAuth support
-
-**Response Format:**
-- JSON (standard Yii2 response format)
-- HTTP status codes: Standard RESTful conventions
-
-## Module-Specific Integrations
-
-**Hostel Management:**
-- Location picker widget: `pigochu/yii2-jquery-locationpicker`
-- Driving distance calculation: `components/DrivingDistance.php`
-
-**Document Generator:**
-- PDF generation: `kartik-v/yii2-mpdf` (mPDF wrapper)
-- QR codes: `endroid/qr-code` ^4.6 (for certificates)
-- Export formats: Excel via `moonlandsoft/yii2-phpexcel`
-
-**Inventory Management:**
-- Data export: `kartik-v/yii2-export`, `hscstudio/yii2-export`
-
-**Library Management:**
-- Document management: PDFs and file handling
-
-**Child Assessment:**
-- QR code generation for assessment certificates
-
-**Leave Management:**
-- Email notifications: SendGrid via SwiftMailer
-
-**Exam Management:**
-- Certificate generation with QR codes
-- PDF output and export
-
-**Staff Management:**
-- Credential handling and authentication
+- Firebase Cloud Messaging - Push notifications to mobile devices
+- SendGrid SMTP - Email delivery webhooks (optional, configured externally)
+- 2Factor.in - OTP delivery callbacks (optional)
 
 ---
 
-*Integration audit: 2026-04-28*
+*Integration audit: 2026-06-04*
