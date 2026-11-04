@@ -2,12 +2,12 @@
 
 <img alt="Nxt School Erp" src=".github/banner.svg" width="100%">
 
-PHP
+NXT Schools ERP: a large PHP school-management system covering the administrative modules the mobile apps and ID-card tooling build on.
 
 <br>
 
 
-![language](https://img.shields.io/badge/language-80915-5B21B6?style=flat-square&labelColor=1E1B4B) ![updated](https://img.shields.io/badge/updated-false-4C1D95?style=flat-square&labelColor=1E1B4B)
+![language](https://img.shields.io/badge/language-PHP-5B21B6?style=flat-square&labelColor=1E1B4B) ![updated](https://img.shields.io/badge/updated-2026--11--04-4C1D95?style=flat-square&labelColor=1E1B4B)
 
 </div>
 
@@ -15,7 +15,7 @@ PHP
 
 ## What this is
 
-PHP
+The core NXT Schools ERP, a PHP application and by far the largest repository here at over 14,000 tracked files. This is the administrative system that the Flutter apps (parent-teacher, hostel, bus tracking) and the ID-card software integrate against.
 
 The code is laid out as:
 
